@@ -1,9 +1,8 @@
-import db from "../db/conn.mjs";
+import { collection } from "../db/conn.mjs";
 
 export default class MovieController {
   async findMovies(searchTerm) {
-    const movies = await db
-      .collection("embedded_movies")
+    const movies = await collection
       .find({ title: searchTerm }, {
         title: 1,
         year: 1,
@@ -20,10 +19,8 @@ export default class MovieController {
   }
 
   async findMoviesWithRegex(searchTerm) {
-    const regex = new RegExp(searchTerm, "i");
-    const movies = await db
-      .collection("embedded_movies")
-      .find({ title: {$regex: regex} }, {
+    const movies = await collection
+      .find({ title: {$regex: new RegExp(searchTerm, "i")} }, {
         title: 1,
         year: 1,
         "imdb.rating": 1,
@@ -34,13 +31,11 @@ export default class MovieController {
       })
       .limit(20)
       .toArray();
-console.log(movies);
     return movies;
   }
 
   async searchMovies(searchTerm) {
-    const movies = await db
-      .collection("embedded_movies")
+    const movies = await collection
       .aggregate([
         {
           $search: {
@@ -73,13 +68,8 @@ console.log(movies);
     return movies;
   }
 
-  /*--------------------------------------------------------
-  VECTORSEARCHFORMOVIES RUNS $SEARCH AGGREGATION
-  returns movies array
-  ---------------------------------------------------------*/
   async vectorSearch(embeddedSearchTerms) {
-    const movies = await db
-      .collection("embedded_movies")
+    const movies = await collection
       .aggregate([
         {
           $search: {
@@ -108,12 +98,7 @@ console.log(movies);
     return movies;
   }
 
-  /*-------------------------------------------------------------------
-  VECTORSEARCHFORMOVIESADVANCED RUNS $SEARCH AGGREGATION WITH FILTER
-  returns movies array
-  ---------------------------------------------------------------------*/
   async vectorSearchAdvanced(embeddedSearchTerms, data) {
-    const collection = db.collection("embedded_movies");
     const { start, end, genre, rating } = data;
     const ratingInt = parseInt(rating);
 
@@ -152,7 +137,6 @@ console.log(movies);
         },
       };
     }
-    //   console.log("COMPOUND OBJECT: ", JSON.stringify(compoundFilterObject));
     const filteredMovies = await collection
       .aggregate([
         {
