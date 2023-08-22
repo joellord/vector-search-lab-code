@@ -28,6 +28,7 @@ const Filter = ({
   searchTerm,
   showCodeBlock,
   setShowCodeBlock,
+  toggleSimpleView,
 }) => {
   let searchObject = {
     text: {
@@ -38,6 +39,9 @@ const Filter = ({
   let searchString = JSON.stringify(searchObject, null, 2);
   return (
     <div id="filter">
+      <div>
+        <button onClick={toggleSimpleView}>Back to Simple View</button>
+      </div>
       {showCodeBlock ? (
         <button
           id="code-block"

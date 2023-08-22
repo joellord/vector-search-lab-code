@@ -12,9 +12,6 @@ const Home = () => {
 
   const MOVIES_VECTOR_SEARCH_ENDPOINT = "http://localhost:5050/movies/semantic";
 
-  let MOVIES_VECTOR_SEARCH_ADVANCED_ENDPOINT =
-    "http://localhost:5050/movies/semantic/advanced";
-
   const [movies, setMovies] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [showCodeBlock, setShowCodeBlock] = useState(false);
@@ -28,6 +25,10 @@ const Home = () => {
 
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [autocompleted, setAutocompleted] = useState(false);
+
+  const [simpleView, setSimpleView] = useState(true);
+
+  const toggleSimpleView = () => setSimpleView(!simpleView);
 
   const getMovies = async (searchTerm) => {
     console.log("HITTING FETCH MOVIES API");
@@ -76,9 +77,12 @@ const Home = () => {
         setShowSuggestions={setShowSuggestions}
         autocompleted={autocompleted}
         setAutocompleted={setAutocompleted}
+        simpleView={simpleView}
+        toggleSimpleView={toggleSimpleView}
       />
       <div className="container">
-        <Filter
+
+        {!simpleView && <Filter
           dateStart={dateStart}
           dateEnd={dateEnd}
           setDateStart={setDateStart}
@@ -91,7 +95,9 @@ const Home = () => {
           searchTerm={searchTerm}
           showCodeBlock={showCodeBlock}
           setShowCodeBlock={setShowCodeBlock}
+          toggleSimpleView={toggleSimpleView}
         />
+        }
 
         {showNeedEndpointMessage ? (
           <div className="needEndpoint">Build Movie 📽️ Endpoint Please</div>

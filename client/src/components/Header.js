@@ -25,6 +25,23 @@ export const LogoMDBFlix = styled.img`
   width: 15%;
 `;
 
+export const LogoMDBFlixSmall = styled.img`
+  width: 10%;
+`;
+
+export const SmallViewHeader = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  max-width: 100%;
+  padding-top: 1em;
+  margin: 0 auto;
+  & button {
+    font-size: 0.75em;
+    padding: 0.5em;
+  }
+`;
+
 const Header = ({
   searchTerm,
   setSearchTerm,
@@ -34,10 +51,22 @@ const Header = ({
   setShowSuggestions,
   autocompleted,
   setAutocompleted,
+  simpleView,
+  toggleSimpleView
 }) => (
   <Wrapper>
+    {simpleView &&
+      <>
+        <div>
+          <LogoMDBFlixSmall src={MLOGO} alt="mdb-logo" />
+        </div>
+        <SmallViewHeader>
+          <button className="subbtn" onClick={toggleSimpleView}>Show Advanced Search</button>
+        </SmallViewHeader>
+      </>
+    }
     <Content>
-      <LogoMDBFlix src={MLOGO} alt="mdb-logo" />
+      {!simpleView && <LogoMDBFlix src={MLOGO} alt="mdb-logo" /> }
       <InputForm>
         <SearchBar
           setSearchTerm={setSearchTerm}
