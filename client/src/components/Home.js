@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 
 // Components
 import Header from "./Header";
@@ -9,11 +8,12 @@ import Filter from "./Filter/Filter";
 
 const Home = () => {
   // INSERT YOUR CREATED MOVIE ENDPOINT
-
-  const MOVIES_VECTOR_SEARCH_ENDPOINT = "http://localhost:5050/movies/semantic";
+  const BASE_URL = "http://localhost:5050/movies";
+  // const MOVIES_VECTOR_SEARCH_ENDPOINT = "http://localhost:5050/movies/semantic";
 
   const [movies, setMovies] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [searchMode, setSearchMode] = useState("find"); // find, search, semantic
   const [showCodeBlock, setShowCodeBlock] = useState(false);
   const [dateStart, setDateStart] = useState(new Date(1970, 12, 1));
   const [dateEnd, setDateEnd] = useState(new Date(2022, 1, 4));
@@ -34,7 +34,7 @@ const Home = () => {
     console.log("HITTING FETCH MOVIES API");
     console.log("SEARCHTERM: ", searchTerm);
 
-    const GET_MOVIES_ENDPOINT = `${MOVIES_VECTOR_SEARCH_ENDPOINT}?searchTerms=${searchTerm}`;
+    const GET_MOVIES_ENDPOINT = `${BASE_URL}/${searchMode}?searchTerms=${searchTerm}`;
     console.log("ENDPOINT: ", GET_MOVIES_ENDPOINT);
 
     try {
@@ -48,13 +48,6 @@ const Home = () => {
 
   useEffect(() => {
     if (!submitted) return;
-    if (MOVIES_VECTOR_SEARCH_ENDPOINT === "") {
-      console.log("");
-      setShowNeedEndpointMessage(true);
-      return;
-    }
-    setShowNeedEndpointMessage(false);
-
     getMovies(searchTerm);
     // getMoviesAdvanced(searchTerm);
 
@@ -79,6 +72,8 @@ const Home = () => {
         setAutocompleted={setAutocompleted}
         simpleView={simpleView}
         toggleSimpleView={toggleSimpleView}
+        searchMode={searchMode}
+        setSearchMode={setSearchMode}
       />
       <div className="container">
 

@@ -52,7 +52,9 @@ const Header = ({
   autocompleted,
   setAutocompleted,
   simpleView,
-  toggleSimpleView
+  toggleSimpleView,
+  searchMode,
+  setSearchMode,
 }) => (
   <Wrapper>
     {simpleView &&
@@ -77,6 +79,8 @@ const Header = ({
           setShowSuggestions={setShowSuggestions}
           autocompleted={autocompleted}
           setAutocompleted={setAutocompleted}
+          searchMode={searchMode}
+          setSearchMode={setSearchMode}
         />
       </InputForm>
     </Content>

@@ -16,32 +16,47 @@ export const Content = styled.div`
   background: transparent;
   margin: 0 auto;
   padding: 20px, 20px, 20px, 20px;
-  border-radius: 20px;
-  color: var(--white);
-  border: 2px solid white;
   box-shadow: 1px 1px 1px 1px slate;
 
-  img {
+  & img {
     position: absolute;
     left: 15px;
     top: 14px;
     width: 30px;
   }
 
-  input {
-    font-size: 30px;
+  & input {
+    font-size: 18px;
     position: absolute;
     left: 0;
     margin: 8px 0;
     padding: 0 0 0 60px;
     border: 0;
-    width: 95%;
+    width: 70%;
     background: transparent;
     height: 40px;
     color: var(--white);
+    border-radius: 20px;
+    color: var(--white);
+    border: 2px solid white;
 
     :focus {
       outline: none;
     }
+  }
+
+  & select {
+    font-size: 18px;
+    position: absolute;
+    right: 0;
+    margin: 8px 0;
+    padding: 0 0 0 60px;
+    width: 20%;
+    background: transparent;
+    height: 40px;
+    color: var(--white);
+    border-radius: 20px;
+    color: var(--white);
+    border: 2px solid white;
   }
 `;

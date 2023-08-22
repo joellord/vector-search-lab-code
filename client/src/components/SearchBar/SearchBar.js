@@ -13,6 +13,8 @@ const SearchBar = ({
   setShowSuggestions,
   autocompleted,
   setAutocompleted,
+  searchMode,
+  setSearchMode,
 }) => {
   const initial = useRef(true); // a mutable variable that will not affect state - and won't trigger a re-render
 
@@ -75,6 +77,15 @@ const SearchBar = ({
             onChange={(event) => setSearchTerm(event.target.value)}
             value={searchTerm}
           />
+          <select
+            onChange={ e => setSearchMode(e.target.value) }
+            value={searchMode}
+          >
+            <option value="find">Filter Query</option>
+            <option value="regex">Regex Query</option>
+            <option value="search">Full-Text Search</option>
+            <option value="semantic">Semantic Search</option>
+          </select>
         </form>
         {showSuggestions && (
           <AutoSuggestions

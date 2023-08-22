@@ -1,6 +1,78 @@
 import db from "../db/conn.mjs";
 
 export default class MovieController {
+  async findMovies(searchTerm) {
+    const movies = await db
+      .collection("embedded_movies")
+      .find({ title: searchTerm }, {
+        title: 1,
+        year: 1,
+        "imdb.rating": 1,
+        fullplot: 1,
+        poster: 1,
+        released: 1,
+        genres: 1
+      })
+      .limit(20)
+      .toArray();
+
+    return movies;
+  }
+
+  async findMoviesWithRegex(searchTerm) {
+    const regex = new RegExp(searchTerm, "i");
+    const movies = await db
+      .collection("embedded_movies")
+      .find({ title: {$regex: regex} }, {
+        title: 1,
+        year: 1,
+        "imdb.rating": 1,
+        fullplot: 1,
+        poster: 1,
+        released: 1,
+        genres: 1
+      })
+      .limit(20)
+      .toArray();
+console.log(movies);
+    return movies;
+  }
+
+  async searchMovies(searchTerm) {
+    const movies = await db
+      .collection("embedded_movies")
+      .aggregate([
+        {
+          $search: {
+            index: "default",
+            text: {
+              query: searchTerm,
+              path: {
+                wildcard: "*",
+              },
+            },
+          },
+        },
+        {
+          $project: {
+            title: 1,
+            year: 1,
+            "imdb.rating": 1,
+            fullplot: 1,
+            poster: 1,
+            released: 1,
+            genres: 1,
+            score: { $meta: "searchScore" },
+          },
+        },
+        {
+          $limit: 20
+        }
+      ]).toArray();
+
+    return movies;
+  }
+
   /*--------------------------------------------------------
   VECTORSEARCHFORMOVIES RUNS $SEARCH AGGREGATION
   returns movies array

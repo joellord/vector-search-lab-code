@@ -46,4 +46,37 @@ router.get("/semantic", async (req, res) => {
   }
 });
 
+router.get("/find", async (req, res) => {
+  const searchTerms = req.query.searchTerms;
+  try {
+    const movies = await movieController.findMovies(searchTerms);
+    return res.json(movies);
+  } catch (err) {
+    console.error(`Something went wrong in find endpoint: ${err}\n`);
+    res.json(err);
+  }
+});
+
+router.get("/regex", async (req, res) => {
+  const searchTerms = req.query.searchTerms;
+  try {
+    const movies = await movieController.findMoviesWithRegex(searchTerms);
+    return res.json(movies);
+  } catch (err) {
+    console.error(`Something went wrong in find endpoint: ${err}\n`);
+    res.json(err);
+  }
+});
+
+router.get("/search", async (req, res) => {
+  const searchTerms = req.query.searchTerms;
+  try {
+    const movies = await movieController.searchMovies(searchTerms);
+    return res.json(movies);
+  } catch (err) {
+    console.error(`Something went wrong in search endpoint: ${err}\n`);
+    res.json(err);
+  }
+});
+
 export default router;

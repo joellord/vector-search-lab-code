@@ -42,7 +42,7 @@ export const ScoreBadge = styled.div`
   background: white;
   padding: 6px;
   color: Crimson;
-  font-size: 30px;
+  font-size: 24px;
   bottom: 0px;
   right: 10px;
   border-radius: 20px;
@@ -50,7 +50,7 @@ export const ScoreBadge = styled.div`
   width: full;
   align: center;
   border: 3px solid black;
-  shadow: 
+  shadow:
   z-index: 10;
   transition: all 0.4s ease-in-out;
   :hover {
