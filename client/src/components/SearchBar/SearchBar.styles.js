@@ -32,7 +32,7 @@ export const Content = styled.div`
     margin: 8px 0;
     padding: 0 0 0 60px;
     border: 0;
-    width: 70%;
+    width: 60%;
     background: transparent;
     height: 40px;
     color: var(--white);

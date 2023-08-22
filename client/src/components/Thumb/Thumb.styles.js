@@ -42,7 +42,7 @@ export const ScoreBadge = styled.div`
   background: white;
   padding: 6px;
   color: Crimson;
-  font-size: 24px;
+  font-size: 18px;
   bottom: 0px;
   right: 10px;
   border-radius: 20px;
