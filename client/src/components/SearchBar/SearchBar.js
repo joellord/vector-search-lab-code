@@ -20,6 +20,15 @@ const SearchBar = ({
 
   const [suggestions, setSuggestions] = useState([]);
 
+  const endpoints = [
+    {value: "find", label: "Filter Query"},
+    {value: "regex", label: "Regex Query"},
+    {value: "search", label: "Full-Text Search"},
+    {value: "fuzzy", label: "Fuzzy Search"},
+    {value: "scored", label: "Scored Search"},
+    {value: "semantic", label: "Semantic Search"}
+  ];
+
   const TITLES_ENDPOINT = "";
 
   const fetchAutocompleteTitles = async (searchTerm) => {
@@ -81,10 +90,7 @@ const SearchBar = ({
             onChange={ e => setSearchMode(e.target.value) }
             value={searchMode}
           >
-            <option value="find">Filter Query</option>
-            <option value="regex">Regex Query</option>
-            <option value="search">Full-Text Search</option>
-            <option value="semantic">Semantic Search</option>
+            {endpoints.map((endpoint, index) => <option key={index} value={endpoint.value}>{endpoint.label}</option> )}
           </select>
         </form>
         {showSuggestions && (

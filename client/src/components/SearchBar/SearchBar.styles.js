@@ -49,8 +49,8 @@ export const Content = styled.div`
     font-size: 18px;
     position: absolute;
     right: 0;
-    margin: 8px 0;
-    padding: 0 0 0 60px;
+    margin: 9px 0;
+    padding: 0 0 0 5px;
     width: 20%;
     background: transparent;
     height: 40px;

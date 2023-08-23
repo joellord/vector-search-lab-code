@@ -1,12 +1,7 @@
 import fetch from "node-fetch";
 const OPENAI_API_KEY = process.env.EMBEDDING_API_KEY;
 
-/*--------------------------------------------------------
- GetTermEmbeddings FUNCTION RETURNS EMBEDDINGS FOR TERMS
----------------------------------------------------------*/
 const getTermEmbeddings = async (query) => {
-  console.log("GETTING EMBEDDINGS");
-
   const url = "https://api.openai.com/v1/embeddings";
 
   // Call OpenAI API to get the embeddings.
@@ -21,7 +16,6 @@ const getTermEmbeddings = async (query) => {
       model: "text-embedding-ada-002",
     })
   }).then((res) => res.json());
-  console.log(response);
 
   return response.data[0].embedding;
 };

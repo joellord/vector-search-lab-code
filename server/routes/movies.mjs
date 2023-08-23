@@ -6,10 +6,8 @@ const router = Router();
 const movieController = new MovieController();
 
 router.post("/semantic/advanced", async (req, res) => {
-  console.log("POST CALL: ADVANCED VECTOR SEARCHING FOR MOVIES");
   const { semanticSearchTerms } = req.body;
 
-  console.log("SEARCH TERMS FROM BODY: ", semanticSearchTerms);
   try {
     const embedding = await getTermEmbeddings(semanticSearchTerms);
 
@@ -28,18 +26,10 @@ router.post("/semantic/advanced", async (req, res) => {
 });
 
 router.get("/semantic", async (req, res) => {
-  console.log("in sematic endpoint");
   const searchTerms = req.query.searchTerms;
-  console.log(searchTerms);
   try {
-    const embedding = await getTermEmbeddings(searchTerms);
-
-    if (embedding !== null) {
-      const movies = await movieController.vectorSearch(embedding);
-      return res.json(movies);
-    } else {
-      return res.statusCode(401).send("No embedding found");
-    }
+    const movies = await movieController.vectorSearch(searchTerms);
+    return res.json(movies);
   } catch (err) {
     console.error(`Something went wrong in semantic endpoint: ${err}\n`);
     res.json(err);
@@ -49,7 +39,7 @@ router.get("/semantic", async (req, res) => {
 router.get("/find", async (req, res) => {
   const searchTerms = req.query.searchTerms;
   try {
-    const movies = await movieController.findMovies(searchTerms);
+    const movies = await movieController.find(searchTerms);
     return res.json(movies);
   } catch (err) {
     console.error(`Something went wrong in find endpoint: ${err}\n`);
@@ -60,7 +50,7 @@ router.get("/find", async (req, res) => {
 router.get("/regex", async (req, res) => {
   const searchTerms = req.query.searchTerms;
   try {
-    const movies = await movieController.findMoviesWithRegex(searchTerms);
+    const movies = await movieController.findWithRegex(searchTerms);
     return res.json(movies);
   } catch (err) {
     console.error(`Something went wrong in find endpoint: ${err}\n`);
@@ -71,10 +61,32 @@ router.get("/regex", async (req, res) => {
 router.get("/search", async (req, res) => {
   const searchTerms = req.query.searchTerms;
   try {
-    const movies = await movieController.searchMovies(searchTerms);
+    const movies = await movieController.search(searchTerms);
     return res.json(movies);
   } catch (err) {
     console.error(`Something went wrong in search endpoint: ${err}\n`);
+    res.json(err);
+  }
+});
+
+router.get("/fuzzy", async (req, res) => {
+  const searchTerms = req.query.searchTerms;
+  try {
+    const movies = await movieController.fuzzySearch(searchTerms);
+    return res.json(movies);
+  } catch (err) {
+    console.error(`Something went wrong in fuzzy endpoint: ${err}\n`);
+    res.json(err);
+  }
+});
+
+router.get("/scored", async (req, res) => {
+  const searchTerms = req.query.searchTerms;
+  try {
+    const movies = await movieController.scoredSearch(searchTerms);
+    return res.json(movies);
+  } catch (err) {
+    console.error(`Something went wrong in fuzzy endpoint: ${err}\n`);
     res.json(err);
   }
 });
