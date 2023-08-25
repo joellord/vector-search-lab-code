@@ -48,7 +48,7 @@ export default class MovieController {
       .aggregate([
         {
           $search: {
-            index: "default",
+            index: "fulltextsearch",
             text: {
               query: searchTerm,
               path: {
@@ -83,7 +83,7 @@ export default class MovieController {
       .aggregate([
         {
           $search: {
-            index: "default",
+            index: "fulltextsearch",
             text: {
               query: searchTerm,
               path: {
@@ -121,7 +121,7 @@ export default class MovieController {
       .aggregate([
         {
           $search: {
-            index: "default",
+            index: "fulltextsearch",
             text: {
               query: searchTerm,
               path: "title",
@@ -171,7 +171,7 @@ export default class MovieController {
       .aggregate([
         {
           $search: {
-            index: "default",
+            index: "vectorsearch",
             knnBeta: {
               vector: embeddedSearchTerms,
               path: "plot_embedding",
